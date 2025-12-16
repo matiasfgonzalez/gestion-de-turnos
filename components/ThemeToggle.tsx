@@ -1,38 +1,48 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 
 export default function ThemeToggle() {
-    const [dark, setDark] = useState<boolean>(() => {
-        try {
-            return localStorage.getItem("theme") === "dark";
-        } catch {
-            return false;
-        }
-    });
-    const [mounted, setMounted] = useState(false);
+    const [dark, setDark] = useState<boolean | null>(null);
 
+    // Sync state with DOM on mount (DOM already has correct class from inline script)
     useEffect(() => {
-        setMounted(true);
+        const isDark = document.documentElement.classList.contains("dark");
+        setDark(isDark);
     }, []);
 
-    useEffect(() => {
-        const root = document.documentElement;
-        if (dark) root.classList.add("dark");
-        else root.classList.remove("dark");
-        try {
-            localStorage.setItem("theme", dark ? "dark" : "light");
-        } catch {}
-    }, [dark]);
+    // Toggle theme
+    const toggleTheme = useCallback(() => {
+        setDark((prev) => {
+            const newValue = !prev;
+            const root = document.documentElement;
 
-    if (!mounted) {
-        return <div className="w-10 h-10 rounded-lg border bg-card" />;
+            if (newValue) {
+                root.classList.add("dark");
+            } else {
+                root.classList.remove("dark");
+            }
+
+            try {
+                localStorage.setItem("theme", newValue ? "dark" : "light");
+            } catch {}
+
+            return newValue;
+        });
+    }, []);
+
+    // Don't render button until we know the theme
+    if (dark === null) {
+        return (
+            <div className="w-10 h-10 rounded-lg border border-border bg-card" />
+        );
     }
 
     return (
         <button
-            onClick={() => setDark((d) => !d)}
-            aria-label="Toggle theme"
-            className="relative w-10 h-10 rounded-lg border bg-card hover:bg-card-hover transition-all flex items-center justify-center group"
+            onClick={toggleTheme}
+            aria-label={dark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+            title={dark ? "Modo claro" : "Modo oscuro"}
+            className="relative w-10 h-10 rounded-lg border border-border bg-card text-foreground hover:bg-card-hover hover:border-brand transition-all flex items-center justify-center group"
         >
             <div className="relative w-5 h-5">
                 {/* Sun icon */}
@@ -45,7 +55,7 @@ export default function ThemeToggle() {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className={`absolute inset-0 transition-all duration-300 ${
+                    className={`absolute inset-0 text-amber-500 transition-all duration-300 ${
                         dark
                             ? "rotate-90 scale-0 opacity-0"
                             : "rotate-0 scale-100 opacity-100"
@@ -64,7 +74,7 @@ export default function ThemeToggle() {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className={`absolute inset-0 transition-all duration-300 ${
+                    className={`absolute inset-0 text-indigo-400 transition-all duration-300 ${
                         dark
                             ? "rotate-0 scale-100 opacity-100"
                             : "-rotate-90 scale-0 opacity-0"

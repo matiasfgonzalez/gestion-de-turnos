@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ThemeToggle from "../components/ThemeToggle";
+import { Toaster } from "../components/ui/sonner";
 
 const inter = Inter({
     subsets: ["latin"],
@@ -20,9 +21,28 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    // Script to prevent FOUC - runs before paint
+    const themeScript = `
+        (function() {
+            try {
+                var theme = localStorage.getItem('theme');
+                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                var isDark = theme === 'dark' || (!theme && prefersDark);
+                if (isDark) {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (e) {}
+        })();
+    `;
+
     return (
         <html lang="es" suppressHydrationWarning>
-            <body className={`${inter.variable} antialiased`}>
+            <head>
+                <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+            </head>
+            <body
+                className={`${inter.variable} antialiased bg-background text-foreground transition-colors duration-200`}
+            >
                 <div className="min-h-screen flex flex-col">
                     {/* Header */}
                     <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-lg">
@@ -165,6 +185,7 @@ export default function RootLayout({
                         </div>
                     </footer>
                 </div>
+                <Toaster position="top-right" richColors />
             </body>
         </html>
     );

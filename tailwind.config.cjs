@@ -33,8 +33,14 @@ module.exports = {
                 },
                 border: "var(--border)",
                 input: "var(--input)",
-                success: "var(--success)",
-                warning: "var(--warning)",
+                success: {
+                    DEFAULT: "var(--success)",
+                    hover: "var(--success-hover)"
+                },
+                warning: {
+                    DEFAULT: "var(--warning)",
+                    hover: "var(--warning-hover)"
+                },
                 danger: {
                     DEFAULT: "var(--danger)",
                     hover: "var(--danger-hover)"

@@ -1,123 +1,295 @@
-**Gestión de Turnos (Next.js App Router)**
+# 📅 Gestión de Turnos
 
--   **Descripción:** Aplicación web para que negocios configuren horarios y clientes reserven turnos. Implementada con Next.js (App Router), Tailwind CSS y persistencia en el navegador mediante `localStorage`.
+Sistema profesional de reserva de turnos para negocios. Aplicación web moderna construida con Next.js, diseñada para funcionar 100% en el navegador sin necesidad de backend.
 
-**Características principales**
+![Next.js](https://img.shields.io/badge/Next.js-15+-black?style=flat-square&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5+-blue?style=flat-square&logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-4+-38B2AC?style=flat-square&logo=tailwind-css)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
--   **Panel de Administración:** crear y gestionar múltiples negocios, configurar horarios por día de la semana, establecer duración mínima/máxima de turnos, ver y cancelar turnos.
--   **Panel de Cliente:** listar negocios, seleccionar fecha y horario disponible, elegir duración dentro del rango permitido, reservar con datos de contacto.
--   **Persistencia:** todos los datos se guardan en `localStorage` (clave `gd_turnos_v1`).
--   **UI moderna:** Tailwind CSS, tema de colores personalizado y modo oscuro con toggle.
+---
 
-**Tech stack**
+## ✨ Características
 
--   **Framework:** Next.js (App Router)
--   **Estilos:** Tailwind CSS
--   **Persistencia:** localStorage
--   **Lenguaje:** TypeScript + React
+### 🏢 Panel de Administración
 
-**Instalación y ejecución**
+-   Crear y gestionar múltiples negocios
+-   Configurar horarios personalizados por día de la semana
+-   Establecer duración mínima/máxima de turnos
+-   Definir precios por rango horario (opcional)
+-   Ver estadísticas: negocios, turnos totales, próximos turnos, ingresos
+-   Filtrar turnos por negocio
+-   Cancelar turnos con confirmación
 
-1. Instalar dependencias:
+### 👤 Panel de Cliente
+
+-   Listar negocios disponibles
+-   Seleccionar fecha y ver horarios disponibles en tiempo real
+-   Elegir duración dentro del rango permitido
+-   Reservar con datos de contacto (nombre, email, teléfono)
+-   Notificar al negocio vía WhatsApp o Email
+
+### 🎨 Interfaz Moderna
+
+-   Diseño SaaS profesional y minimalista
+-   Modo claro / oscuro con toggle (sin flash al cambiar de página)
+-   Animaciones fluidas con Framer Motion
+-   Toasts elegantes con Sonner
+-   Componentes reutilizables estilo shadcn/ui
+-   Totalmente responsive (mobile-first)
+
+### 🔒 Privacidad y Seguridad
+
+-   100% local: datos guardados en `localStorage`
+-   Sin servidores externos
+-   Sin registro requerido
+-   Control total de la información
+
+---
+
+## 🛠️ Tech Stack
+
+| Tecnología                   | Uso                            |
+| ---------------------------- | ------------------------------ |
+| **Next.js 15**               | Framework React con App Router |
+| **TypeScript**               | Tipado estático                |
+| **Tailwind CSS 4**           | Estilos utility-first          |
+| **Framer Motion**            | Animaciones fluidas            |
+| **Sonner**                   | Notificaciones toast           |
+| **Radix UI**                 | Primitivos accesibles          |
+| **class-variance-authority** | Variantes de componentes       |
+| **localStorage**             | Persistencia de datos          |
+
+---
+
+## 📁 Estructura del Proyecto
+
+```
+gestion-de-turnos/
+├── app/
+│   ├── globals.css          # Variables CSS y estilos globales
+│   ├── layout.tsx           # Layout principal con header/footer
+│   ├── page.tsx             # Landing page
+│   ├── admin/
+│   │   └── page.tsx         # Página de administración
+│   └── client/
+│       └── page.tsx         # Página de reservas
+├── components/
+│   ├── AdminDashboard.tsx   # Dashboard de administración
+│   ├── BusinessForm.tsx     # Formulario de negocio
+│   ├── ClientBooking.tsx    # Flujo de reserva
+│   ├── ThemeToggle.tsx      # Toggle modo claro/oscuro
+│   ├── Toast.tsx            # Componente toast (legacy)
+│   └── ui/                  # Componentes UI reutilizables
+│       ├── button.tsx
+│       ├── input.tsx
+│       ├── label.tsx
+│       ├── card.tsx
+│       ├── badge.tsx
+│       ├── empty-state.tsx
+│       └── sonner.tsx
+├── lib/
+│   ├── models.ts            # Tipos TypeScript
+│   ├── storage.ts           # CRUD localStorage
+│   └── utils.ts             # Utilidades (cn)
+└── public/                  # Assets estáticos
+```
+
+---
+
+## 🚀 Instalación
+
+### Requisitos
+
+-   Node.js 20.9+ (requerido por Next.js 15)
+-   npm, yarn, pnpm o bun
+
+### Pasos
+
+1. **Clonar el repositorio:**
+
+```bash
+git clone <repo-url>
+cd gestion-de-turnos
+```
+
+2. **Instalar dependencias:**
 
 ```bash
 npm install
 ```
 
-2. Ejecutar en modo desarrollo:
+3. **Ejecutar en desarrollo:**
 
 ```bash
 npm run dev
 ```
 
-3. Abrir en el navegador:
+4. **Abrir en el navegador:**
 
-```text
+```
 http://localhost:3000
 ```
 
-**Rutas principales**
+---
 
--   `/` — Landing con enlaces a los modos.
--   `/admin` — Panel de administración (crear/editar negocios, ver/cancelar turnos).
--   `/client` — Vista cliente para reservar turnos.
+## 📖 Uso
 
-**Cómo usar**
+### Modo Administrador (`/admin`)
 
--   **Modo Admin:** Ir a `/admin`, crear un negocio con nombre, duraciones y rangos horarios por día (ej. 09:00–17:00). Guardar. Desde la misma vista puede ver y cancelar turnos.
--   **Modo Cliente:** Ir a `/client`, seleccionar un negocio, elegir fecha, duración y uno de los horarios disponibles. Completar nombre (recomendado email/teléfono) y confirmar la reserva.
+1. Click en **"+ Nuevo negocio"**
+2. Completar datos:
+    - Nombre del negocio
+    - Email y WhatsApp (para notificaciones)
+    - Duración mínima/máxima de turnos
+    - Moneda (opcional)
+3. Configurar horarios por día de la semana:
+    - Agregar rangos horarios (ej: 09:00 - 13:00, 14:00 - 18:00)
+    - Definir precio por rango (opcional)
+4. Guardar el negocio
+5. Ver y gestionar turnos reservados
 
-**Persistencia y prevención de conflictos**
+### Modo Cliente (`/client`)
 
--   Las reservas se guardan en `localStorage` y el sistema comprueba antes de reservar que el mismo horario no esté ya tomado (prevención de doble reserva).
-
-**Tema y accesibilidad**
-
--   Se incluye un toggle en la cabecera para alternar entre modo claro y oscuro; la preferencia se guarda en `localStorage`.
--   Variables CSS para colores y clases utilitarias en `app/globals.css`.
-
-**Archivos clave**
-
--   **Layout y estilos globales:** [app/layout.tsx](app/layout.tsx) • [app/globals.css](app/globals.css)
--   **Admin:** [app/admin/page.tsx](app/admin/page.tsx) • [components/AdminDashboard.tsx](components/AdminDashboard.tsx)
--   **Cliente:** [app/client/page.tsx](app/client/page.tsx) • [components/ClientBooking.tsx](components/ClientBooking.tsx)
--   **Formularios:** [components/BusinessForm.tsx](components/BusinessForm.tsx)
--   **Persistencia:** [lib/storage.ts](lib/storage.ts) • [lib/models.ts](lib/models.ts)
--   **Utilidades UI:** [components/Toast.tsx](components/Toast.tsx) • [components/ThemeToggle.tsx](components/ThemeToggle.tsx)
-
-**Sugerencias y pasos siguientes**
-
--   Revisión visual y ajustes de espaciados/colores (ya hay un tema base aplicado).
--   Añadir validaciones más estrictas / verificación por email (si se desea persistencia en servidor, integrar backend API).
--   Tests unitarios o E2E para flujos críticos (crear negocio, reservar, cancelar).
-
-**Comandos útiles**
-
--   Desarrollo: `npm run dev`
--   Build para producción: `npm run build` y `npm run start`
-
-Si quieres, puedo:
-
--   Crear un `README` más corto en inglés.
--   Añadir un script `seed` para crear datos de prueba.
--   Inicializar un repositorio Git y hacer commits automáticos de los cambios.
+1. Seleccionar un negocio de la lista
+2. Elegir fecha en el calendario
+3. Seleccionar duración del turno
+4. Elegir horario disponible
+5. Completar datos de contacto
+6. Confirmar reserva
+7. Notificar al negocio por WhatsApp o Email
 
 ---
 
-Actualizado: contenido generado automáticamente para facilitar pruebas locales y desarrollo.
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## 🎨 Personalización
 
-## Getting Started
+### Variables CSS
 
-First, run the development server:
+Las variables de color se definen en `app/globals.css`:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```css
+:root {
+    --background: #fafbfc;
+    --foreground: #0f172a;
+    --brand: #0ea5e9;
+    --accent: #8b5cf6;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    /* ... más variables */
+}
+
+.dark {
+    --background: #0a0f1e;
+    --foreground: #f1f5f9;
+    --brand: #06b6d4;
+    /* ... modo oscuro */
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Componentes UI
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Los componentes en `components/ui/` siguen el patrón shadcn/ui con variantes:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```tsx
+<Button variant="default" size="lg">Primary</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="danger">Danger</Button>
+<Button variant="success">Success</Button>
+<Button variant="whatsapp">WhatsApp</Button>
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🔧 Scripts Disponibles
 
--   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
--   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Comando         | Descripción            |
+| --------------- | ---------------------- |
+| `npm run dev`   | Servidor de desarrollo |
+| `npm run build` | Build de producción    |
+| `npm run start` | Servidor de producción |
+| `npm run lint`  | Linter ESLint          |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🐳 Docker
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+El proyecto incluye configuración Docker:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+# Desarrollo
+docker-compose up
+
+# Producción
+docker build -t gestion-turnos .
+docker run -p 3000:3000 gestion-turnos
+```
+
+---
+
+## 📝 Modelo de Datos
+
+### Business (Negocio)
+
+```typescript
+type Business = {
+    id: string;
+    name: string;
+    minDuration: number; // minutos
+    maxDuration: number; // minutos
+    schedule: Record<Weekday, TimeRange[]>;
+    currency?: string; // "$", "USD", etc.
+    email?: string; // para notificaciones
+    whatsapp?: string; // con código de país
+};
+```
+
+### Booking (Reserva)
+
+```typescript
+type Booking = {
+    id: string;
+    businessId: string;
+    date: string; // YYYY-MM-DD
+    start: string; // HH:MM
+    end: string; // HH:MM
+    duration: number;
+    clientName: string;
+    clientEmail?: string;
+    clientPhone?: string;
+    price?: number;
+};
+```
+
+---
+
+## 🤝 Contribuir
+
+1. Fork del repositorio
+2. Crear rama feature (`git checkout -b feature/nueva-funcionalidad`)
+3. Commit de cambios (`git commit -m 'feat: agregar nueva funcionalidad'`)
+4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
+5. Abrir Pull Request
+
+---
+
+## 📄 Licencia
+
+MIT License - ver [LICENSE](LICENSE) para más detalles.
+
+---
+
+## 🙏 Agradecimientos
+
+-   [Next.js](https://nextjs.org/) - Framework React
+-   [Tailwind CSS](https://tailwindcss.com/) - Framework CSS
+-   [Framer Motion](https://www.framer.com/motion/) - Animaciones
+-   [Radix UI](https://www.radix-ui.com/) - Primitivos accesibles
+-   [Sonner](https://sonner.emilkowal.ski/) - Toasts elegantes
+-   [shadcn/ui](https://ui.shadcn.com/) - Inspiración de componentes
+
+---
+
+<p align="center">
+  Hecho con ❤️ usando Next.js
+</p>
