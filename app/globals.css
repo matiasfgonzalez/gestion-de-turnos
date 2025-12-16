@@ -32,11 +32,13 @@
   --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   
   /* Radius */
   --radius-sm: 0.5rem;
   --radius: 0.75rem;
   --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
 }
 
 /* Dark mode - Elegant professional theme */
@@ -46,10 +48,10 @@
   --muted-foreground: #94a3b8;
   
   --brand: #06b6d4;
-  --brand-hover: #0891b2;
+  --brand-hover: #22d3ee;
   
   --accent: #a78bfa;
-  --accent-hover: #8b5cf6;
+  --accent-hover: #c4b5fd;
   
   --card: #111827;
   --card-hover: #1f2937;
@@ -58,16 +60,17 @@
   --input: #1e293b;
   
   --success: #34d399;
-  --success-hover: #10b981;
+  --success-hover: #6ee7b7;
   --warning: #fbbf24;
-  --warning-hover: #f59e0b;
+  --warning-hover: #fcd34d;
   --danger: #f87171;
-  --danger-hover: #ef4444;
+  --danger-hover: #fca5a5;
   
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
   --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.5);
 }
 
 * {

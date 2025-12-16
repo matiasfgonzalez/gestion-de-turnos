@@ -49,106 +49,61 @@ export default function RootLayout({
                         <div className="container">
                             <div className="flex h-16 items-center justify-between">
                                 {/* Logo & Brand */}
-                                <div className="flex items-center gap-3">
-                                    <a
-                                        href="/"
-                                        className="flex items-center gap-2 group"
-                                    >
-                                        <div className="w-8 h-8 rounded-lg bg-linear-to-br from-brand to-accent flex items-center justify-center group-hover:scale-105 transition-transform">
-                                            <svg
-                                                width="18"
-                                                height="18"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="white"
-                                                strokeWidth="2.5"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                            >
-                                                <rect
-                                                    x="3"
-                                                    y="4"
-                                                    width="18"
-                                                    height="18"
-                                                    rx="2"
-                                                    ry="2"
-                                                />
-                                                <line
-                                                    x1="16"
-                                                    y1="2"
-                                                    x2="16"
-                                                    y2="6"
-                                                />
-                                                <line
-                                                    x1="8"
-                                                    y1="2"
-                                                    x2="8"
-                                                    y2="6"
-                                                />
-                                                <line
-                                                    x1="3"
-                                                    y1="10"
-                                                    x2="21"
-                                                    y2="10"
-                                                />
-                                            </svg>
-                                        </div>
-                                        <span className="font-semibold text-lg">
-                                            Gestión de Turnos
+                                <a
+                                    href="/"
+                                    className="flex items-center gap-3 group"
+                                >
+                                    <div className="w-10 h-10 rounded-xl bg-linear-to-br from-brand to-cyan-500 flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg shadow-brand/25">
+                                        <svg
+                                            width="22"
+                                            height="22"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="white"
+                                            strokeWidth="2.5"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        >
+                                            <path d="M9 11l3 3L22 4" />
+                                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                                        </svg>
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <span className="font-bold text-lg leading-tight">
+                                            Gestión
                                         </span>
-                                    </a>
-                                    <span className="hidden sm:inline-flex items-center gap-1.5 text-xs text-muted px-2 py-1 rounded-full bg-input">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-success animate-pulse" />
-                                        Demo local
-                                    </span>
-                                </div>
+                                        <span className="font-bold text-lg leading-tight text-brand">
+                                            de Turnos
+                                        </span>
+                                    </div>
+                                </a>
 
                                 {/* Navigation */}
-                                <nav className="flex items-center gap-2">
+                                <nav className="hidden md:flex items-center gap-6">
                                     <a
-                                        className="btn btn-ghost text-sm hidden sm:inline-flex"
                                         href="/admin"
+                                        className="text-sm font-medium text-muted hover:text-foreground transition-colors"
                                     >
-                                        <svg
-                                            width="16"
-                                            height="16"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        >
-                                            <path d="M20 7h-9M14 17H5M17 3v18M10 17l-3-3 3-3" />
-                                        </svg>
-                                        Administrar
+                                        Panel de Administración
                                     </a>
                                     <a
-                                        className="btn btn-primary"
                                         href="/client"
+                                        className="text-sm font-medium text-muted hover:text-foreground transition-colors"
                                     >
-                                        <svg
-                                            width="16"
-                                            height="16"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            className="hidden sm:inline"
-                                        >
-                                            <path d="M12 5v14M5 12h14" />
-                                        </svg>
-                                        <span className="hidden sm:inline">
-                                            Reservar turno
-                                        </span>
-                                        <span className="sm:hidden">
-                                            Reservar
-                                        </span>
+                                        Panel de Reservas
                                     </a>
-                                    <ThemeToggle />
                                 </nav>
+
+                                {/* Right side */}
+                                <div className="flex items-center gap-3">
+                                    <ThemeToggle />
+                                    <a
+                                        href="/client"
+                                        className="btn btn-primary hidden sm:inline-flex"
+                                    >
+                                        Reservar Ahora
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </header>
@@ -157,30 +112,186 @@ export default function RootLayout({
                     <main className="flex-1">{children}</main>
 
                     {/* Footer */}
-                    <footer className="border-t py-8 mt-auto">
+                    <footer className="bg-gray-900 text-white py-16 mt-auto">
                         <div className="container">
-                            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted">
-                                <p>
-                                    © 2024 Gestión de Turnos. Datos guardados
-                                    localmente.
-                                </p>
-                                <div className="flex items-center gap-4">
-                                    <a href="/" className="hover:text-brand">
-                                        Inicio
-                                    </a>
-                                    <a
-                                        href="/admin"
-                                        className="hover:text-brand"
-                                    >
-                                        Admin
-                                    </a>
-                                    <a
-                                        href="/client"
-                                        className="hover:text-brand"
-                                    >
-                                        Cliente
-                                    </a>
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+                                {/* Brand */}
+                                <div className="md:col-span-1 space-y-4">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-10 h-10 rounded-xl bg-linear-to-br from-brand to-cyan-500 flex items-center justify-center">
+                                            <svg
+                                                width="22"
+                                                height="22"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="white"
+                                                strokeWidth="2.5"
+                                            >
+                                                <path d="M9 11l3 3L22 4" />
+                                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                                            </svg>
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <span className="font-bold text-lg leading-tight">
+                                                Gestión
+                                            </span>
+                                            <span className="font-bold text-lg leading-tight text-brand">
+                                                de Turnos
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <p className="text-gray-400 text-sm">
+                                        Sistema profesional de reserva de turnos
+                                        para negocios. 100% privado, sin costos
+                                        ocultos, con tecnología moderna.
+                                    </p>
+                                    {/* Social icons */}
+                                    <div className="flex gap-3">
+                                        <a
+                                            href="#"
+                                            className="w-9 h-9 rounded-lg bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
+                                        >
+                                            <svg
+                                                width="18"
+                                                height="18"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                                className="text-gray-400"
+                                            >
+                                                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
+                                            </svg>
+                                        </a>
+                                        <a
+                                            href="#"
+                                            className="w-9 h-9 rounded-lg bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
+                                        >
+                                            <svg
+                                                width="18"
+                                                height="18"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                                className="text-gray-400"
+                                            >
+                                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                                                <rect
+                                                    x="2"
+                                                    y="9"
+                                                    width="4"
+                                                    height="12"
+                                                />
+                                                <circle cx="4" cy="4" r="2" />
+                                            </svg>
+                                        </a>
+                                        <a
+                                            href="#"
+                                            className="w-9 h-9 rounded-lg bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
+                                        >
+                                            <svg
+                                                width="18"
+                                                height="18"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                                className="text-gray-400"
+                                            >
+                                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                                            </svg>
+                                        </a>
+                                    </div>
                                 </div>
+
+                                {/* Links */}
+                                <div className="space-y-4">
+                                    <h4 className="font-semibold text-white">
+                                        Enlaces Rápidos
+                                    </h4>
+                                    <ul className="space-y-2 text-sm">
+                                        <li>
+                                            <a
+                                                href="/"
+                                                className="text-gray-400 hover:text-white transition-colors"
+                                            >
+                                                Inicio
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="/admin"
+                                                className="text-gray-400 hover:text-white transition-colors"
+                                            >
+                                                Panel de Administración
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="/client"
+                                                className="text-gray-400 hover:text-white transition-colors"
+                                            >
+                                                Panel de Reservas
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                {/* Legal */}
+                                <div className="space-y-4">
+                                    <h4 className="font-semibold text-white">
+                                        Legal
+                                    </h4>
+                                    <ul className="space-y-2 text-sm">
+                                        <li>
+                                            <a
+                                                href="#"
+                                                className="text-gray-400 hover:text-white transition-colors"
+                                            >
+                                                Política de Privacidad
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="#"
+                                                className="text-gray-400 hover:text-white transition-colors"
+                                            >
+                                                Términos y Condiciones
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                {/* Contact */}
+                                <div className="space-y-4">
+                                    <h4 className="font-semibold text-white">
+                                        Soporte
+                                    </h4>
+                                    <ul className="space-y-2 text-sm">
+                                        <li>
+                                            <a
+                                                href="#"
+                                                className="text-gray-400 hover:text-white transition-colors"
+                                            >
+                                                Soporte y Ayuda
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a
+                                                href="#"
+                                                className="text-gray-400 hover:text-white transition-colors"
+                                            >
+                                                Documentación
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            {/* Bottom bar */}
+                            <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+                                <p>
+                                    © 2025 Gestión de Turnos. Todos los derechos
+                                    reservados.
+                                </p>
+                                <p className="flex items-center gap-1">
+                                    <span>❤️</span> Hecho con Next.js
+                                </p>
                             </div>
                         </div>
                     </footer>
