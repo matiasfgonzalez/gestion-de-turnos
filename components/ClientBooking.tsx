@@ -42,6 +42,9 @@ export default function ClientBooking() {
     const [clientName, setClientName] = useState("");
     const [clientEmail, setClientEmail] = useState("");
     const [clientPhone, setClientPhone] = useState("");
+    const [showNotificationOptions, setShowNotificationOptions] =
+        useState(false);
+    const [currentBooking, setCurrentBooking] = useState<Booking | null>(null);
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -93,6 +96,69 @@ export default function ClientBooking() {
     function validatePhone(phone: string) {
         const digits = phone.replace(/[^0-9]/g, "");
         return digits.length >= 7 && digits.length <= 15;
+    }
+
+    function sendWhatsAppNotification(
+        booking: Booking,
+        businessData: Business
+    ) {
+        if (!businessData.whatsapp) {
+            alert("El negocio no tiene configurado un número de WhatsApp");
+            return;
+        }
+
+        // Limpiar el número de WhatsApp (remover espacios, guiones, etc)
+        const phoneNumber = businessData.whatsapp.replace(/[^0-9+]/g, "");
+
+        const message = encodeURIComponent(
+            `📅 *Nuevo turno reservado*\n\n` +
+                `Negocio: ${businessData.name}\n` +
+                `Cliente: ${booking.clientName}\n` +
+                `Fecha: ${booking.date}\n` +
+                `Hora: ${booking.start}\n` +
+                `Duración: ${booking.duration} min\n` +
+                (booking.price !== undefined
+                    ? `Precio: ${businessData.currency || "$"}${
+                          booking.price
+                      }\n`
+                    : "Precio: Gratis\n") +
+                (booking.clientEmail ? `Email: ${booking.clientEmail}\n` : "") +
+                (booking.clientPhone ? `Teléfono: ${booking.clientPhone}` : "")
+        );
+
+        window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
+    }
+
+    function sendEmailNotification(booking: Booking, businessData: Business) {
+        if (!businessData.email) {
+            alert("El negocio no tiene configurado un email");
+            return;
+        }
+
+        const subject = encodeURIComponent(
+            `Nuevo turno reservado - ${businessData.name}`
+        );
+        const body = encodeURIComponent(
+            `Nuevo turno reservado\n\n` +
+                `Negocio: ${businessData.name}\n` +
+                `Cliente: ${booking.clientName}\n` +
+                `Fecha: ${booking.date}\n` +
+                `Hora: ${booking.start}\n` +
+                `Duración: ${booking.duration} minutos\n` +
+                (booking.price !== undefined
+                    ? `Precio: ${businessData.currency || "$"}${
+                          booking.price
+                      }\n`
+                    : "Precio: Gratis\n") +
+                (booking.clientEmail
+                    ? `Email del cliente: ${booking.clientEmail}\n`
+                    : "") +
+                (booking.clientPhone
+                    ? `Teléfono del cliente: ${booking.clientPhone}`
+                    : "")
+        );
+
+        window.location.href = `mailto:${businessData.email}?subject=${subject}&body=${body}`;
     }
 
     function reserve() {
@@ -150,13 +216,26 @@ export default function ClientBooking() {
         };
         storage.addBooking(b);
         setData(storage.getAll());
-        setToast("✓ Turno reservado exitosamente");
+        setCurrentBooking(b);
+
+        // Mostrar opciones de notificación si el negocio tiene email o WhatsApp
+        if (business.email || business.whatsapp) {
+            setShowNotificationOptions(true);
+        } else {
+            setToast("✓ Turno reservado exitosamente");
+        }
 
         // Reset form
         setSelectedSlot(null);
         setClientName("");
         setClientEmail("");
         setClientPhone("");
+    }
+
+    function closeNotificationModal() {
+        setShowNotificationOptions(false);
+        setCurrentBooking(null);
+        setToast("✓ Turno reservado exitosamente");
     }
 
     const step = !selectedBusiness || !business ? 1 : !selectedSlot ? 2 : 3;
@@ -563,6 +642,85 @@ export default function ClientBooking() {
                     </div>
                 </div>
             </div>
+
+            {/* Notification Modal */}
+            {showNotificationOptions && currentBooking && business && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+                    <div className="card max-w-md w-full p-6 space-y-6 animate-fade-in">
+                        <div className="text-center space-y-2">
+                            <div className="w-12 h-12 mx-auto rounded-full bg-success/10 flex items-center justify-center">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className="text-success"
+                                >
+                                    <polyline points="20 6 9 17 4 12" />
+                                </svg>
+                            </div>
+                            <h3 className="text-xl font-bold">
+                                ✓ Turno reservado
+                            </h3>
+                            <p className="text-muted text-sm">
+                                Ahora puedes notificar al negocio
+                            </p>
+                        </div>
+
+                        <div className="space-y-3">
+                            {business.whatsapp && (
+                                <button
+                                    onClick={() => {
+                                        sendWhatsAppNotification(
+                                            currentBooking,
+                                            business
+                                        );
+                                        closeNotificationModal();
+                                    }}
+                                    className="btn btn-primary w-full py-3 text-base flex items-center justify-center gap-2"
+                                >
+                                    <span className="text-xl">📲</span>
+                                    Enviar por WhatsApp
+                                </button>
+                            )}
+
+                            {business.email && (
+                                <button
+                                    onClick={() => {
+                                        sendEmailNotification(
+                                            currentBooking,
+                                            business
+                                        );
+                                        closeNotificationModal();
+                                    }}
+                                    className="btn btn-secondary w-full py-3 text-base flex items-center justify-center gap-2"
+                                >
+                                    <span className="text-xl">📧</span>
+                                    Enviar por Email
+                                </button>
+                            )}
+
+                            {!business.whatsapp && !business.email && (
+                                <p className="text-center text-muted text-sm">
+                                    El negocio no tiene configurados canales de
+                                    notificación
+                                </p>
+                            )}
+                        </div>
+
+                        <button
+                            onClick={closeNotificationModal}
+                            className="btn btn-ghost w-full text-sm"
+                        >
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
+            )}
 
             {toast && <Toast message={toast} onClose={() => setToast(null)} />}
         </div>

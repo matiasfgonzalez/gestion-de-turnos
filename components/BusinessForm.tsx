@@ -27,6 +27,8 @@ export default function BusinessForm({
     const [minD, setMinD] = useState(initial?.minDuration || 30);
     const [maxD, setMaxD] = useState(initial?.maxDuration || 60);
     const [currency, setCurrency] = useState(initial?.currency || "$");
+    const [email, setEmail] = useState(initial?.email || "");
+    const [whatsapp, setWhatsapp] = useState(initial?.whatsapp || "");
 
     const initSchedule = (): Record<Weekday, TimeRange[]> => {
         const s: any = {};
@@ -107,7 +109,9 @@ export default function BusinessForm({
             minDuration: Number(minD),
             maxDuration: Number(maxD),
             schedule,
-            currency: currency.trim() || "$"
+            currency: currency.trim() || "$",
+            email: email.trim() || undefined,
+            whatsapp: whatsapp.trim() || undefined
         };
 
         if (totalRanges === 0) {
@@ -135,6 +139,45 @@ export default function BusinessForm({
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Ej: Barbería Centro"
                     />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label className="label">
+                            Email del negocio{" "}
+                            <span className="text-muted text-xs font-normal">
+                                (opcional)
+                            </span>
+                        </label>
+                        <input
+                            type="email"
+                            className="input w-full"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="negocio@example.com"
+                        />
+                        <p className="text-xs text-muted mt-1">
+                            Para notificaciones por email
+                        </p>
+                    </div>
+                    <div>
+                        <label className="label">
+                            WhatsApp{" "}
+                            <span className="text-muted text-xs font-normal">
+                                (opcional)
+                            </span>
+                        </label>
+                        <input
+                            type="tel"
+                            className="input w-full"
+                            value={whatsapp}
+                            onChange={(e) => setWhatsapp(e.target.value)}
+                            placeholder="+54 9 11 1234 5678"
+                        />
+                        <p className="text-xs text-muted mt-1">
+                            Incluye código de país (ej: +549...)
+                        </p>
+                    </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">

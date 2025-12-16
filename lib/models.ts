@@ -13,6 +13,8 @@ export type Business = {
     maxDuration: number; // minutes
     schedule: Record<Weekday, TimeRange[]>;
     currency?: string; // Ej: "$", "USD", "ARS", etc
+    email?: string; // Email del negocio para notificaciones
+    whatsapp?: string; // Número de WhatsApp (con código de país)
 };
 
 export type Booking = {
