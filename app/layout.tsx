@@ -7,24 +7,24 @@ import { Header } from '../components/Header'
 import { Toaster } from '../components/ui/sonner'
 
 const inter = Inter({
-    subsets: ['latin'],
-    variable: '--font-inter',
-    display: 'swap',
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
-    title: 'Gestión de Turnos - Sistema profesional de reservas',
-    description:
-        'Gestiona horarios de tu negocio y permite a clientes reservar turnos fácilmente. Interfaz moderna y profesional.',
+  title: 'Gestión de Turnos - Sistema profesional de reservas',
+  description:
+    'Gestiona horarios de tu negocio y permite a clientes reservar turnos fácilmente. Interfaz moderna y profesional.',
 }
 
 export default function RootLayout({
-    children,
+  children,
 }: Readonly<{
-    children: React.ReactNode
+  children: React.ReactNode
 }>) {
-    // Script to prevent FOUC - runs before paint
-    const themeScript = `
+  // Script to prevent FOUC - runs before paint
+  const themeScript = `
         (function() {
             try {
                 var theme = localStorage.getItem('theme');
@@ -37,28 +37,28 @@ export default function RootLayout({
         })();
     `
 
-    return (
-        <ClerkProvider>
-            <html lang="es" suppressHydrationWarning>
-                <head>
-                    <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-                </head>
-                <body
-                    className={`${inter.variable} bg-background text-foreground antialiased transition-colors duration-200`}
-                >
-                    <div className="flex min-h-screen flex-col">
-                        {/* Header */}
-                        <Header />
+  return (
+    <ClerkProvider>
+      <html lang="es" suppressHydrationWarning>
+        <head>
+          <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        </head>
+        <body
+          className={`${inter.variable} bg-background text-foreground antialiased transition-colors duration-200`}
+        >
+          <div className="flex min-h-screen flex-col">
+            {/* Header */}
+            <Header />
 
-                        {/* Main content */}
-                        <main className="flex-1">{children}</main>
+            {/* Main content */}
+            <main className="flex-1">{children}</main>
 
-                        {/* Footer */}
-                        <Footer />
-                    </div>
-                    <Toaster position="top-right" richColors />
-                </body>
-            </html>
-        </ClerkProvider>
-    )
+            {/* Footer */}
+            <Footer />
+          </div>
+          <Toaster position="top-right" richColors />
+        </body>
+      </html>
+    </ClerkProvider>
+  )
 }

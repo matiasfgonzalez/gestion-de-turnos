@@ -124,11 +124,7 @@ const benefits = [
   },
 ]
 
-const trustIndicators = [
-  'Sin registro requerido',
-  'Sin costo oculto',
-  'Control total de tus datos',
-]
+const trustIndicators = ['Sin registro requerido', 'Sin costo oculto', 'Control total de tus datos']
 
 export default function Home() {
   return (
