@@ -30,7 +30,7 @@ export function AuthCTA({ variant = 'section', className = '' }: AuthCTAProps) {
                 </SignedIn>
                 <SignedOut>
                     <SignInButton mode="modal">
-                        <Button size="lg" className="gap-2">
+                        <Button variant="outline" size="lg" className="gap-2">
                             Comenzar Ahora
                             <ArrowRightIcon />
                         </Button>

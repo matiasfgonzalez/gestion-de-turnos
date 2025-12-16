@@ -8,7 +8,7 @@ export function AuthButton() {
         <>
             <SignedOut>
                 <SignInButton mode="modal">
-                    <Button variant="default" size="sm">
+                    <Button variant="outline" size="sm">
                         Iniciar Sesión
                     </Button>
                 </SignInButton>
